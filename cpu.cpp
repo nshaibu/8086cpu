@@ -282,6 +282,7 @@ void _8086cpu::running(unsigned int sizeOfBin) {
 					case 0xC5: /*AL to CH*/ tmp = get_al_reg(); set_ch_reg(tmp); break;
 					case 0xC6: /*AL to DH*/ tmp = get_al_reg(); set_dh_reg(tmp); break;
 					case 0xC7: /*AL to BH*/ tmp = get_al_reg(); set_bh_reg(tmp); break;
+
 					case 0xC8: /*CL to AL*/ tmp = get_cl_reg(); set_al_reg(tmp); break;
 					case 0xCA: /*CL to DL*/ tmp = get_cl_reg(); set_dl_reg(tmp); break;
 					case 0xCB: /*CL to BL*/ tmp = get_cl_reg(); set_bl_reg(tmp); break;
@@ -289,6 +290,7 @@ void _8086cpu::running(unsigned int sizeOfBin) {
 					case 0xCD: /*CL to CH*/ tmp = get_cl_reg(); set_ch_reg(tmp); break;
 					case 0xCE: /*CL to DH*/ tmp = get_cl_reg(); set_dh_reg(tmp); break;
 					case 0xCF: /*CL to BH*/ tmp = get_cl_reg(); set_bh_reg(tmp); break;
+
 					case 0xD0: /*DL to AL*/ tmp = get_dl_reg(); set_al_reg(tmp); break;
 					case 0xD1: /*DL to CL*/ tmp = get_dl_reg(); set_cl_reg(tmp); break;
 					case 0xD3: /*DL to BL*/ tmp = get_dl_reg(); set_bl_reg(tmp); break;
@@ -296,6 +298,7 @@ void _8086cpu::running(unsigned int sizeOfBin) {
 					case 0xD5: /*DL to CH*/ tmp = get_dl_reg(); set_ch_reg(tmp); break;
 					case 0xD6: /*dl to dh*/ tmp = get_dl_reg(); set_dh_reg(tmp); break;
 					case 0xD7: /*dl to bh*/ tmp = get_dl_reg(); set_bh_reg(tmp); break;
+
 					case 0xD8: /*bl to al*/ tmp = get_bl_reg(); set_al_reg(tmp); break;
 					case 0xD9: /*bl to cl*/ tmp = get_bl_reg(); set_cl_reg(tmp); break;
 					case 0xDA: /*bl to dl*/ tmp = get_bl_reg(); set_dl_reg(tmp); break;
@@ -304,6 +307,7 @@ void _8086cpu::running(unsigned int sizeOfBin) {
 					case 0xDE: /*bl to dh*/ tmp = get_bl_reg(); set_dh_reg(tmp); break;
 					case 0xDF: /*bl to bh*/ tmp = get_bl_reg(); set_bh_reg(tmp); break;
 
+
 					case 0xE0: /*AH to al */tmp = get_ah_reg(); set_al_reg(tmp); break;
 					case 0xE1: /*Ah to cL*/ tmp = get_ah_reg(); set_cl_reg(tmp); break;
 					case 0xE2: /*Ah to dl*/ tmp = get_ah_reg(); set_dl_reg(tmp); break;
@@ -311,6 +315,7 @@ void _8086cpu::running(unsigned int sizeOfBin) {
 					case 0xE7: /*Ah to bH*/ tmp = get_ah_reg(); set_bh_reg(tmp); break;
 					case 0xE5: /*Ah to cH*/ tmp = get_ah_reg(); set_ch_reg(tmp); break;
 					case 0xE6: /*Ah to dH*/ tmp = get_ah_reg(); set_dh_reg(tmp); break;
+
 					case 0xE8: /*Ch to AL*/ tmp = get_ch_reg(); set_al_reg(tmp); break;
 					case 0xE9: /*Ch to cL*/ tmp = get_ch_reg(); set_cl_reg(tmp); break;
 					case 0xEA: /*Ch to dL*/ tmp = get_ch_reg(); set_dl_reg(tmp); break;
@@ -318,6 +323,7 @@ void _8086cpu::running(unsigned int sizeOfBin) {
 					case 0xEC: /*Ch to aH*/ tmp = get_ch_reg(); set_ah_reg(tmp); break;
 					case 0xEE: /*Ch to DH*/ tmp = get_ch_reg(); set_dh_reg(tmp); break;
 					case 0xFF: /*Ch to BH*/ tmp = get_ch_reg(); set_bh_reg(tmp); break;
+
 					case 0xF0: /*Dh to AL*/ tmp = get_dh_reg(); set_al_reg(tmp); break;
 					case 0xF1: /*Dh to CL*/ tmp = get_dh_reg(); set_cl_reg(tmp); break;
 					case 0xF2: /*Dh to dL*/ tmp = get_dh_reg(); set_dl_reg(tmp); break;
@@ -325,6 +331,7 @@ void _8086cpu::running(unsigned int sizeOfBin) {
 					case 0xF4: /*Dh to aH*/ tmp = get_dh_reg(); set_ah_reg(tmp); break;
 					case 0xF5: /*dh to ch*/ tmp = get_dh_reg(); set_ch_reg(tmp); break;
 					case 0xF7: /*dh to bh*/ tmp = get_dh_reg(); set_bh_reg(tmp); break;
+
 					case 0xF8: /*bh to al*/ tmp = get_bh_reg(); set_al_reg(tmp); break;
 					case 0xF9: /*bh to cl*/ tmp = get_bh_reg(); set_cl_reg(tmp); break;
 					case 0xFA: /*bh to dl*/ tmp = get_bh_reg(); set_dl_reg(tmp); break;
@@ -334,7 +341,40 @@ void _8086cpu::running(unsigned int sizeOfBin) {
 					case 0xFE: /*bh to dh*/ tmp = get_bh_reg(); set_dh_reg(tmp); break;
 				}
 				break;
-			case 0x89: break;//MOV reg to/from reg in word
+			case 0x89: //MOV reg to/from reg in word
+				addr_mode = mem[ADDR_TO_20BITS(*(reg->IP), offset)];
+				++offset; ExitProgram++;
+
+				switch(addr_mode) {
+					case 0xC1: /*Ac to Cx */tmp = get_ac_reg(); set_cx_reg(tmp); break;
+					case 0xC2: /*Ac to Dx*/ tmp = get_ac_reg(); set_dx_reg(tmp); break;
+					case 0xC3: /*Ac to Bx*/ tmp = get_ac_reg(); set_bx_reg(tmp); break;
+
+					case 0xC5: /*AL to Cx*/ tmp = get_ac_reg(); set_cx_reg(tmp); break;
+					case 0xC6: /*Ac to Dx*/ tmp = get_ac_reg(); set_dx_reg(tmp); break;
+					case 0xC7: /*Ac to Bx*/ tmp = get_ac_reg(); set_bx_reg(tmp); break;
+					case 0xC8: /*Cx to Ac*/ tmp = get_cx_reg(); set_ac_reg(tmp); break;
+					case 0xCA: /*Cx to Dx*/ tmp = get_cx_reg(); set_dx_reg(tmp); break;
+					case 0xCB: /*Cx to Bx*/ tmp = get_cx_reg(); set_bx_reg(tmp); break;
+					case 0xCC: /*Cx to Ac*/ tmp = get_cx_reg(); set_ac_reg(tmp); break;
+
+					case 0xCE: /*Cx to Dx*/ tmp = get_cx_reg(); set_dx_reg(tmp); break;
+					case 0xCF: /*Cx to Bx*/ tmp = get_cx_reg(); set_bx_reg(tmp); break;
+					case 0xD0: /*Dx to Ac*/ tmp = get_dx_reg(); set_ac_reg(tmp); break;
+					case 0xD1: /*Dx to Cx*/ tmp = get_dx_reg(); set_cx_reg(tmp); break;
+					case 0xD3: /*Dx to Bx*/ tmp = get_dx_reg(); set_bx_reg(tmp); break;
+					case 0xD4: /*Dx to Ac*/ tmp = get_dx_reg(); set_ac_reg(tmp); break;
+					case 0xD5: /*Dx to Cx*/ tmp = get_dx_reg(); set_cx_reg(tmp); break;
+
+					case 0xD7: /*dx to bx*/ tmp = get_dx_reg(); set_bx_reg(tmp); break;
+					case 0xD8: /*bx to ac*/ tmp = get_bx_reg(); set_ac_reg(tmp); break;
+					case 0xD9: /*bx to cx*/ tmp = get_bx_reg(); set_cx_reg(tmp); break;
+					case 0xDA: /*bx to dx*/ tmp = get_bx_reg(); set_dx_reg(tmp); break;
+					case 0xDC: /*bx to ac*/ tmp = get_bx_reg(); set_ac_reg(tmp); break;
+					case 0xDD: /*bx to cx*/ tmp = get_bx_reg(); set_cx_reg(tmp); break;
+					case 0xDE: /*bx to dx*/ tmp = get_bx_reg(); set_dx_reg(tmp); break;
+				}
+				break;
 			case 0x8A: break;//MOV reg/mem to/from reg in byte
 			case 0x8B: break;//MOV reg/mem to/from reg in word
 			case 0x8E: break;//MOV reg/mem to/from segreg
