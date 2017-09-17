@@ -303,6 +303,35 @@ void _8086cpu::running(unsigned int sizeOfBin) {
 					case 0xDD: /*bl to ch*/ tmp = get_bl_reg(); set_ch_reg(tmp); break;
 					case 0xDE: /*bl to dh*/ tmp = get_bl_reg(); set_dh_reg(tmp); break;
 					case 0xDF: /*bl to bh*/ tmp = get_bl_reg(); set_bh_reg(tmp); break;
+
+					case 0xE0: /*AH to al */tmp = get_ah_reg(); set_al_reg(tmp); break;
+					case 0xE1: /*Ah to cL*/ tmp = get_ah_reg(); set_cl_reg(tmp); break;
+					case 0xE2: /*Ah to dl*/ tmp = get_ah_reg(); set_dl_reg(tmp); break;
+					case 0xE3: /*Ah to bl*/ tmp = get_ah_reg(); set_bl_reg(tmp); break;
+					case 0xE7: /*Ah to bH*/ tmp = get_ah_reg(); set_bh_reg(tmp); break;
+					case 0xE5: /*Ah to cH*/ tmp = get_ah_reg(); set_ch_reg(tmp); break;
+					case 0xE6: /*Ah to dH*/ tmp = get_ah_reg(); set_dh_reg(tmp); break;
+					case 0xE8: /*Ch to AL*/ tmp = get_ch_reg(); set_al_reg(tmp); break;
+					case 0xE9: /*Ch to cL*/ tmp = get_ch_reg(); set_cl_reg(tmp); break;
+					case 0xEA: /*Ch to dL*/ tmp = get_ch_reg(); set_dl_reg(tmp); break;
+					case 0xEB: /*Ch to bl*/ tmp = get_ch_reg(); set_bl_reg(tmp); break;
+					case 0xEC: /*Ch to aH*/ tmp = get_ch_reg(); set_ah_reg(tmp); break;
+					case 0xEE: /*Ch to DH*/ tmp = get_ch_reg(); set_dh_reg(tmp); break;
+					case 0xFF: /*Ch to BH*/ tmp = get_ch_reg(); set_bh_reg(tmp); break;
+					case 0xF0: /*Dh to AL*/ tmp = get_dh_reg(); set_al_reg(tmp); break;
+					case 0xF1: /*Dh to CL*/ tmp = get_dh_reg(); set_cl_reg(tmp); break;
+					case 0xF2: /*Dh to dL*/ tmp = get_dh_reg(); set_dl_reg(tmp); break;
+					case 0xF3: /*Dh to bl*/ tmp = get_dh_reg(); set_bl_reg(tmp); break;
+					case 0xF4: /*Dh to aH*/ tmp = get_dh_reg(); set_ah_reg(tmp); break;
+					case 0xF5: /*dh to ch*/ tmp = get_dh_reg(); set_ch_reg(tmp); break;
+					case 0xF7: /*dh to bh*/ tmp = get_dh_reg(); set_bh_reg(tmp); break;
+					case 0xF8: /*bh to al*/ tmp = get_bh_reg(); set_al_reg(tmp); break;
+					case 0xF9: /*bh to cl*/ tmp = get_bh_reg(); set_cl_reg(tmp); break;
+					case 0xFA: /*bh to dl*/ tmp = get_bh_reg(); set_dl_reg(tmp); break;
+					case 0xFB: /*bh to bl*/ tmp = get_bh_reg(); set_bl_reg(tmp); break;
+					case 0xFC: /*bh to ah*/ tmp = get_bh_reg(); set_ah_reg(tmp); break;
+					case 0xFD: /*bh to ch*/ tmp = get_bh_reg(); set_ch_reg(tmp); break;
+					case 0xFE: /*bh to dh*/ tmp = get_bh_reg(); set_dh_reg(tmp); break;
 				}
 				break;
 			case 0x89: break;//MOV reg to/from reg in word
